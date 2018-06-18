@@ -34,9 +34,9 @@ ADD conf/www.conf /etc/php7/php-fpm.d/www.conf
 COPY app /app
 RUN chown -R www-data:www-data /app/www
 
-CMD ["php", "/app/composer.phar", "install", "-o"]
-
 WORKDIR /app
+RUN php composer.phar install -o
+
 EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
