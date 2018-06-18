@@ -4,6 +4,7 @@ $entryData = array(
   , 'title'    => "UniCourt Push Notification"
   , 'article'  => "This case has been updated"
   , 'when'     => time()
+  , 'host'	=> gethostname()
 );
 
 // This is our new stuff
