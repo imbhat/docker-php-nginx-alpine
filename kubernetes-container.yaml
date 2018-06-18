@@ -37,4 +37,7 @@ spec:
         imagePullPolicy: IfNotPresent
         name: nginx-server
         ports:
-        - containerPort: 80
+        - name: web
+          containerPort: 80
+        - name: socket
+          containerPort: 8082

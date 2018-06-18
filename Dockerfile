@@ -32,6 +32,7 @@ COPY composer.lock composer.lock
 RUN curl -sS https://getcomposer.org/installer | \
     php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader && rm -rf /root/.composer
+RUN composer dump-autoload --optimize
 
 COPY . ./
 RUN chown -R www-data:www-data /app/www
