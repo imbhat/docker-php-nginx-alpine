@@ -30,13 +30,10 @@ ADD conf/nginx_app.conf /etc/nginx/conf.d/nginx_app.conf
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/www.conf /etc/php7/php-fpm.d/www.conf
 
-
 COPY app /app
 RUN chown -R www-data:www-data /app/www
 
 WORKDIR /app
 RUN php composer.phar install -o
-
-EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
