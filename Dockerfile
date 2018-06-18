@@ -33,6 +33,9 @@ WORKDIR /app
 COPY www /app/www
 RUN chown -R www-data:www-data /app/www
 
+COPY scripts /app/scripts
+RUN sh scripts/start.sh
+
 EXPOSE 80
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
