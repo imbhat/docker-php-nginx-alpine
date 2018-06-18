@@ -1,5 +1,5 @@
 <?php
-require dirname(__DIR__) . 'init.php';
+require 'init.php';
 
 $loop   = React\EventLoop\Factory::create();
 $pusher = new PushNotification\Pusher;
