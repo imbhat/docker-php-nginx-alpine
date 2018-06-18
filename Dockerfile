@@ -34,10 +34,7 @@ WORKDIR /app
 COPY www /app/www
 RUN chown -R www-data:www-data /app/www
 
-RUN php /app/www/composer.phar install -o
-
-#COPY scripts /app/scripts
-#RUN sh scripts/start.sh
+RUN php /app/www/composer.phar install
 
 EXPOSE 80
 
