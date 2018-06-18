@@ -9,8 +9,8 @@ spec:
       targetPort: 80
       nodePort: 30028
     - name: ws
-      port: 82
-      targetPort: 82
+      port: 8082
+      targetPort: 8082
       nodePort: 30029
   type: NodePort
   selector:

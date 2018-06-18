@@ -1,3 +1,3 @@
 <?php
-require '/extensions/sockets/vendor/autoload.php';
+require '/app/extensions/sockets/vendor/autoload.php';
 
