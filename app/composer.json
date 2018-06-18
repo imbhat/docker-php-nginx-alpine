@@ -9,6 +9,9 @@
         "psr-4": {
             "PushNotification\\": "app"
         }
+    },
+    "config": {
+        "vendor-dir": "/extensions/sockets/vendor"
     }
 }
 
