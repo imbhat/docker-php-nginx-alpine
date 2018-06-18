@@ -11,7 +11,7 @@
         }
     },
     "config": {
-        "vendor-dir": "/extensions/sockets/vendor"
+        "vendor-dir": "/app/extensions/sockets/vendor"
     }
 }
 
