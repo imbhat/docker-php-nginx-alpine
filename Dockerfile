@@ -32,9 +32,9 @@ ADD conf/www.conf /etc/php7/php-fpm.d/www.conf
 
 
 COPY app .
-RUN chown -R www-data:www-data /app/www
+#RUN chown -R www-data:www-data /app/www
 
-RUN php /app/www/composer.phar install
+RUN php /app/www/composer.phar install -o
 
 WORKDIR /app
 EXPOSE 80
