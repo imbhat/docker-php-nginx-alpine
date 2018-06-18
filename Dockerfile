@@ -1,34 +1,38 @@
-FROM php:7.2.4-fpm-alpine
+FROM alpine:latest
 
-ENV NGINX_VERSION nginx-1.9.12
+RUN set -x ; \
+  addgroup -g 82 -S www-data ; \
+  adduser -u 82 -D -S -G www-data www-data && exit 0 ; exit 1
+  
+RUN apk --update add \
+  nginx \
+  php7 \
+  php7-fpm \
+  php7-pdo \
+  php7-json \
+  php7-mysqli \
+  php7-pdo_mysql \
+  php7-phar \
+  php7-mbstring \
+  supervisor
 
-RUN apk --update add openssl-dev pcre-dev zlib-dev wget build-base && \
-    mkdir -p /tmp/src && \
-    cd /tmp/src && \
-    wget http://nginx.org/download/${NGINX_VERSION}.tar.gz && \
-    tar -zxvf ${NGINX_VERSION}.tar.gz && \
-    cd /tmp/src/${NGINX_VERSION} && \
-    ./configure \
-        --with-http_ssl_module \
-        --with-http_gzip_static_module \
-        --prefix=/etc/nginx \
-        --http-log-path=/var/log/nginx/access.log \
-        --error-log-path=/var/log/nginx/error.log \
-        --sbin-path=/usr/local/sbin/nginx && \
-    make && \
-    make install && \
-    apk del build-base && \
-    rm -rf /tmp/src && \
-    rm -rf /var/cache/apk/*
+RUN mkdir -p /etc/nginx && \
+	mkdir -p /var/run/php-fpm && \
+	mkdir -p /var/run/nginx && \
+	mkdir -p /var/log/supervisor
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log
-RUN ln -sf /dev/stderr /var/log/nginx/error.log
+RUN rm /etc/nginx/conf.d/default.conf
+RUN rm /etc/php7/php-fpm.d/www.conf
 
-VOLUME ["/var/log/nginx"]
+ADD conf/supervisord.conf /etc/supervisord.conf
+ADD conf/nginx_app.conf /etc/nginx/conf.d/nginx_app.conf
+ADD conf/nginx.conf /etc/nginx/nginx.conf
+ADD conf/www.conf /etc/php7/php-fpm.d/www.conf
 
-WORKDIR /etc/nginx
+WORKDIR /app
+COPY www /app/www
+RUN chown -R www-data:www-data /app/www
 
-EXPOSE 80 443
+EXPOSE 80
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]

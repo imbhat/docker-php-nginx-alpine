@@ -1,0 +1,14 @@
+{
+    "name": "UniCourt Notifications",
+    "require": {
+        "cboden/ratchet": "0.4.1",
+        "ext-zmq": "*",
+        "react/zmq": "0.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "PushNotification\\": "app"
+        }
+    }
+}
+
