@@ -4,9 +4,14 @@ metadata:
   name: phpweb-service
 spec:
   ports:
-    - port: 80
+    - name: http
+      port: 80
       targetPort: 80
       nodePort: 30028
+    - name: ws
+      port: 82
+      targetPort: 82
+      nodePort: 30029
   type: NodePort
   selector:
     module: phpnginx_server
