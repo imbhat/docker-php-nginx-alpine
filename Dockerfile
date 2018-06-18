@@ -28,6 +28,8 @@ RUN rm /etc/php7/php-fpm.d/www.conf
 COPY composer.json composer.json
 COPY composer.lock composer.lock
 
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
 RUN composer install --prefer-dist --no-scripts --no-dev --no-autoloader && rm -rf /root/.composer
 
 COPY . ./
