@@ -15,6 +15,7 @@ RUN apk --update add \
   php7-phar \
   php7-mbstring \
   php7-zmq \
+  curl \
   supervisor
 
 RUN mkdir -p /etc/nginx && \
