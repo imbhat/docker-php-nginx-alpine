@@ -31,7 +31,7 @@ ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/www.conf /etc/php7/php-fpm.d/www.conf
 
 
-COPY app .
+COPY app /app
 #RUN chown -R www-data:www-data /app/www
 
 #RUN php /app/www/composer.phar install -o
