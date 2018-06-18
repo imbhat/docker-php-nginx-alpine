@@ -25,15 +25,20 @@ RUN mkdir -p /etc/nginx && \
 RUN rm /etc/nginx/conf.d/default.conf
 RUN rm /etc/php7/php-fpm.d/www.conf
 
-COPY app /app
-RUN chown -R www-data:www-data /app/www
-
-WORKDIR /app
-RUN php composer.phar install -o
-
 ADD conf/supervisord.conf /etc/supervisord.conf
 ADD conf/nginx_app.conf /etc/nginx/conf.d/nginx_app.conf
 ADD conf/nginx.conf /etc/nginx/nginx.conf
 ADD conf/www.conf /etc/php7/php-fpm.d/www.conf
+
+RUN curl -sS https://getcomposer.org/installer | \
+    php -- --install-dir=/usr/bin/ --filename=composer
+COPY composer.json ./
+COPY composer.lock ./
+RUN composer install --no-scripts --no-autoloader
+COPY . ./
+RUN composer dump-autoload --optimize && \
+    composer run-scripts post-install-cmd
+
+RUN chown -R www-data:www-data /app/www
 
 CMD ["/usr/bin/supervisord", "-n", "-c", "/etc/supervisord.conf"]
