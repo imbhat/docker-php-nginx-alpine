@@ -14,6 +14,7 @@ RUN apk --update add \
   php7-pdo_mysql \
   php7-phar \
   php7-mbstring \
+  php7-zmq \
   supervisor
 
 RUN mkdir -p /etc/nginx && \
